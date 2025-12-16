@@ -77,6 +77,21 @@ export const SHADOWS = {
 
 // Textos
 export const MESSAGES = {
+	// Inicio
 	WELCOME: "¡Bienvenido a BooksApp!",
 	WELCOME_SUBTEXT: "Explora, busca y guarda tus libros favoritos.",
+
+	// Errores
+	ERROR_SEARCH_REQUIRED: "Por favor, ingresa un término de búsqueda",
+	ERROR_NO_RESULTS: "No se encontraron resultados",
+	ERROR_API_FAILURE: "Error al obtener información de la API",
+
+	// Avisos
+	OFFLINE_MODE: "Modo sin conexión - Solo puedes ver favoritos",
+	SEARCH_REQUIRES_CONNECTION: "Necesitas conexión a Internet para buscar",
+
+	// Pantalla de búsqueda
+	SEARCH_PLACEHOLDER: "Buscar libros...",
+	SEARCH_BUTTON: "Buscar",
+	RESULTS_FOUND: (count: number) => `${count} resultado${count !== 1 ? "s" : ""} encontrado${count !== 1 ? "s" : ""}`,
 };
