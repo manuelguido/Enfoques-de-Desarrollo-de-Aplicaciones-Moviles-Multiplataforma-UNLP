@@ -114,3 +114,37 @@ export interface GoogleBookItem {
 		webReaderLink?: string;
 	};
 }
+
+/**
+ * Helper para convertir GoogleBookItem a Book
+ */
+export function convertGoogleBookToBook(item: GoogleBookItem): Book {
+	const volumeInfo = item.volumeInfo;
+
+	let publishedYear: number | undefined;
+	if (volumeInfo.publishedDate) {
+		const yearMatch = volumeInfo.publishedDate.match(/^\d{4}/);
+		if (yearMatch) {
+			publishedYear = parseInt(yearMatch[0], 10);
+		}
+	}
+
+	return {
+		id: item.id,
+		title: volumeInfo.title,
+		authors: volumeInfo.authors,
+		publishedDate: volumeInfo.publishedDate,
+		publishedYear,
+		description: volumeInfo.description,
+		categories: volumeInfo.categories,
+		pageCount: volumeInfo.pageCount,
+		language: volumeInfo.language,
+		isbn: volumeInfo.industryIdentifiers?.find((id) => id.type === "ISBN_13" || id.type === "ISBN_10")?.identifier,
+		previewLink: volumeInfo.previewLink,
+		infoLink: volumeInfo.infoLink,
+		thumbnail: volumeInfo.imageLinks?.thumbnail,
+		imageLinks: volumeInfo.imageLinks,
+		publisher: volumeInfo.publisher,
+		industryIdentifiers: volumeInfo.industryIdentifiers,
+	};
+}

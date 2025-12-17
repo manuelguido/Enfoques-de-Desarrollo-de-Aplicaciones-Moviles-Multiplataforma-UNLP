@@ -4,27 +4,38 @@
 
 // Colores
 export const COLORS = {
-	primary: "#4e64b1",
-	primary50: "#f3f6fb",
-	primary100: "#e4eaf5",
-	primary200: "#cedcef",
-	primary300: "#adc4e3",
-	primary400: "#86a6d4",
-	primary500: "#6989c8",
-	primary600: "#5671ba",
-	primary700: "#4e64b1",
-	primary800: "#42508b",
-	primary900: "#39456f",
-	primary950: "#262c45",
+	primary: "#fc642d",
+	primary50: "#fff4ed",
+	primary100: "#ffe5d5",
+	primary200: "#ffc7a9",
+	primary300: "#fea073",
+	primary400: "#fc642d",
+	primary500: "#fa4915",
+	primary600: "#eb2f0b",
+	primary700: "#c31f0b",
+	primary800: "#9b1b11",
+	primary900: "#7d1911",
+	primary950: "#430907",
 
-	success: "#00a63e",
-	warning: "#e17100",
-	error: "#e7000b",
+	text50: "#f6f6f6",
+	text100: "#e7e7e7",
+	text200: "#d1d1d1",
+	text300: "#b0b0b0",
+	text400: "#888888",
+	text500: "#6d6d6d",
+	text600: "#5d5d5d",
+	text700: "#4f4f4f",
+	text800: "#454545",
+	text900: "#3d3d3d",
+	text950: "#191919",
 
-	background: "#F5F5F5",
+	success: "#00a699",
+	warning: "#fc642d",
+	error: "#ff5a5f",
+
+	background: "#F1F3F5",
 	surface: "#FFFFFF",
-	text: "#191919",
-	textSecondary: "#757575",
+
 	border: "#E0E0E0",
 	overlay: "rgba(0, 0, 0, 0.5)",
 };
@@ -44,7 +55,7 @@ export const FONT_SIZES = {
 export const SPACING = {
 	xs: 4,
 	sm: 8,
-	md: 16,
+	md: 12,
 	lg: 24,
 	xl: 32,
 	"2xl": 48,
@@ -85,10 +96,15 @@ export const MESSAGES = {
 	ERROR_SEARCH_REQUIRED: "Por favor, ingresa un término de búsqueda",
 	ERROR_NO_RESULTS: "No se encontraron resultados",
 	ERROR_API_FAILURE: "Error al obtener información de la API",
+	ERROR_NO_CONNECTION: "No hay conexión a Internet",
+	ERROR_LOAD_FAVORITES: "Error al cargar favoritos",
+	ERROR_GENERIC: "Ocurrió un error. Intenta nuevamente",
 
 	// Avisos
 	OFFLINE_MODE: "Modo sin conexión - Solo puedes ver favoritos",
 	SEARCH_REQUIRES_CONNECTION: "Necesitas conexión a Internet para buscar",
+	LOADING: "Cargando...",
+	NO_FAVORITES: "No tienes libros favoritos aún",
 
 	// Pantalla de búsqueda
 	SEARCH_PLACEHOLDER: "Buscar libros...",

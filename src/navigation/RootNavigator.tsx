@@ -29,7 +29,7 @@ function HomeStack() {
 				}}
 			/>
 			<Stack.Screen
-				name="BookDetail"
+				name="BookDetailScreen"
 				component={BookDetailScreen}
 				options={({ route }: any) => ({
 					title: route.params?.book?.title || "Detalle del Libro",
@@ -93,8 +93,8 @@ export function RootNavigator() {
 			<Tab.Navigator
 				screenOptions={{
 					headerShown: false,
-					tabBarActiveTintColor: COLORS.primary800,
-					tabBarInactiveTintColor: COLORS.textSecondary,
+					tabBarActiveTintColor: COLORS.primary400,
+					tabBarInactiveTintColor: COLORS.text700,
 					tabBarStyle: {
 						backgroundColor: COLORS.surface,
 						borderTopColor: COLORS.border,
@@ -131,7 +131,7 @@ export function RootNavigator() {
 
 export type RootStackParamList = {
 	HomeScreen: undefined;
-	BookDetail: { book: any };
+	BookDetailScreen: { book: any };
 	FavoritesScreen: undefined;
 	BookDetailFromFavorites: { book: any };
 };
