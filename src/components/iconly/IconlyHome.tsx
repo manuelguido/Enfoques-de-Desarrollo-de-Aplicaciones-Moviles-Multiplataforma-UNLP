@@ -1,11 +1,16 @@
 import React from "react";
 import Svg, { Path } from "react-native-svg";
 
-export const IconlyHome = ({ size = 24, color = "#000000" }) => {
+type IconlyIconProps = {
+	size?: number;
+	color?: string;
+};
+
+export const IconlyHome = ({ size = 24, color = "#000000" }: IconlyIconProps) => {
 	return (
 		<Svg width={size} height={size} viewBox="0 0 25 24" fill="none">
-			<Path d="M6.12066 20.999C4.7449 20.9971 3.63086 19.8821 3.63086 18.5063V9.35854C3.63086 8.30482 4.19323 7.33089 5.10684 6.80549L11.0292 3.39332C11.9399 2.86889 13.0608 2.86889 13.9715 3.39332L19.8939 6.80549C20.8075 7.33089 21.3699 8.30482 21.3699 9.35854V18.5063C21.3699 19.8821 20.2558 20.9971 18.8801 20.999" stroke={color} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-			<Path opacity="0.4" d="M6.12109 20.9997L7.20789 21.0007C8.48733 21.0016 9.52548 19.9645 9.52548 18.684V15.4217C9.52548 13.7939 10.8448 12.4746 12.4726 12.4746H12.53C14.1577 12.4746 15.4771 13.7939 15.4771 15.4217V18.684C15.4771 19.9645 16.5143 21.0016 17.7947 21.0007L18.8805 20.9997" stroke={color} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+			<Path opacity="0.4" d="M9.32874 16.1354H15.1437" stroke={color} strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"></Path>
+			<Path fillRule="evenodd" clipRule="evenodd" d="M2.65002 13.713C2.65002 8.082 3.26402 8.475 6.56902 5.41C8.01502 4.246 10.265 2 12.208 2C14.15 2 16.445 4.235 17.904 5.41C21.209 8.475 21.822 8.082 21.822 13.713C21.822 22 19.863 22 12.236 22C4.60903 22 2.65002 22 2.65002 13.713Z" stroke={color} strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"></Path>
 		</Svg>
 	);
 };
