@@ -6,7 +6,7 @@ type IconlyIconProps = {
 	color?: string;
 };
 
-export const IconlyHome = ({ size = 24, color = "#000000" }: IconlyIconProps) => {
+export const IconlyHomeDuotone = ({ size = 24, color = "#000000" }: IconlyIconProps) => {
 	return (
 		<Svg width={size} height={size} viewBox="0 0 25 24" fill="none">
 			<Path opacity="0.4" d="M9.32874 16.1354H15.1437" stroke={color} strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"></Path>

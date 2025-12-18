@@ -6,8 +6,8 @@ import { HomeScreen } from "../screens/HomeScreen";
 import { BookDetailScreen } from "../screens/BookDetailScreen";
 import { FavoritesScreen } from "../screens/FavoritesScreen";
 import { COLORS, FONT_SIZES } from "../utils/constants";
-import { IconlyHome } from "../components/iconly/IconlyHome";
-import { IconlyFavorite } from "../components/iconly/IconlyFavorite";
+import { IconlyHomeDuotone } from "../components/iconly/duotone/IconlyHomeDuotone";
+import { IconlyFavoriteDuotone } from "../components/iconly/duotone/IconlyFavoriteDuotone";
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -113,7 +113,7 @@ export function RootNavigator() {
 					component={HomeStack}
 					options={{
 						title: "Inicio",
-						tabBarIcon: ({ color, size }) => <IconlyHome color={color} size={size} />,
+						tabBarIcon: ({ color, size }) => <IconlyHomeDuotone color={color} size={size} />,
 					}}
 				/>
 				<Tab.Screen
@@ -121,7 +121,7 @@ export function RootNavigator() {
 					component={FavoritesStack}
 					options={{
 						title: "Favoritos",
-						tabBarIcon: ({ color, size }) => <IconlyFavorite color={color} size={size} />,
+						tabBarIcon: ({ color, size }) => <IconlyFavoriteDuotone color={color} size={size} />,
 					}}
 				/>
 			</Tab.Navigator>

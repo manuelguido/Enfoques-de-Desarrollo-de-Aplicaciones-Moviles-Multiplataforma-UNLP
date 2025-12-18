@@ -8,7 +8,8 @@ import { googleBooksAPI } from "../services/googleBooksAPI";
 import { connectivityService } from "../services/connectivityService";
 import { useFavorites } from "../context/FavoritesContext";
 import { COLORS, SPACING, FONT_SIZES, MESSAGES } from "../utils/constants";
-import { IconlyBook } from "../components/iconly/IconlyBook";
+import { IconlyBookDuotone } from "../components/iconly/duotone/IconlyBookDuotone";
+import { IconlySearchDuotone } from "../components/iconly/duotone/IconlySearchDuotone";
 
 interface HomeScreenProps {
 	navigation: any;
@@ -100,7 +101,7 @@ export function HomeScreen({ navigation }: HomeScreenProps) {
 			{/* Header */}
 			<View style={styles.header}>
 				<View style={styles.titleContainer}>
-					<IconlyBook color={COLORS.primary400} size={32}/>
+					<IconlyBookDuotone color={COLORS.primary400} size={32} />
 					<Text style={styles.title}>BooksApp</Text>
 				</View>
 				<Text style={styles.subtitle}>Buscá los libros que más te gusten y agregalos a tus favoritos.</Text>
@@ -117,6 +118,7 @@ export function HomeScreen({ navigation }: HomeScreenProps) {
 					</View>
 					<TouchableOpacity style={[styles.searchButton, !isOnline ? styles.searchButtonDisabled : null]} onPress={handleSearch} disabled={loading || !isOnline}>
 						<Text style={styles.searchButtonText}>{MESSAGES.SEARCH_BUTTON}</Text>
+						<IconlySearchDuotone color="#FFFFFF" size={20} />
 					</TouchableOpacity>
 				</View>
 			</View>
