@@ -3,6 +3,8 @@ import { View, Text, StyleSheet, TouchableOpacity, Image } from "react-native";
 import { Book } from "../models/Book";
 import { COLORS, FONT_SIZES, SPACING, BORDER_RADIUS } from "../utils/constants";
 import { formatAuthors, formatPublishedYear, getImageUrl } from "../utils/helpers";
+import { IconlyStarDuotone } from "./iconly/duotone/IconlyStarDuotone";
+import { useFavoriteToggle } from "../hooks/useFavoriteToggle";
 
 interface BookCardProps {
 	book: Book;
@@ -11,9 +13,23 @@ interface BookCardProps {
 
 export function BookCard({ book, onPress }: BookCardProps) {
 	const imageUrl = getImageUrl(book, "small");
+	const { toggleFavorite, isFavorite } = useFavoriteToggle();
+
+	const isBookFavorite = isFavorite(book.id);
 
 	return (
-		<TouchableOpacity style={[styles.card]} onPress={onPress} activeOpacity={0.7}>
+		<TouchableOpacity style={[styles.card, isBookFavorite ? styles.favoriteCard : null]} onPress={onPress} activeOpacity={0.7}>
+			{/* Icono de favorito */}
+			<TouchableOpacity
+				style={styles.favoriteIcon}
+				onPress={(e) => {
+					e.stopPropagation();
+					toggleFavorite(book);
+				}}
+				activeOpacity={0.7}>
+				<IconlyStarDuotone size={20} color={isBookFavorite ? COLORS.primary600 : COLORS.text400} />
+			</TouchableOpacity>
+
 			{/* Imagen */}
 			<View style={styles.imageContainer}>
 				{imageUrl ? (
@@ -25,7 +41,7 @@ export function BookCard({ book, onPress }: BookCardProps) {
 				)}
 			</View>
 
-			{/* Información */}
+			{/* Información del libro */}
 			<View style={styles.content}>
 				<Text style={styles.title} numberOfLines={2}>
 					{book.title}
@@ -43,19 +59,24 @@ export function BookCard({ book, onPress }: BookCardProps) {
 
 const styles = StyleSheet.create({
 	card: {
+		position: "relative",
 		flexDirection: "row",
 		backgroundColor: COLORS.surface,
-		borderRadius: BORDER_RADIUS.md,
-		marginHorizontal: SPACING.md,
-		marginVertical: SPACING.sm,
+		borderRadius: BORDER_RADIUS.xl,
 		paddingRight: SPACING.md,
-		overflow: "hidden",
+		overflow: "visible",
+	},
+	favoriteCard: {
+		borderLeftWidth: 4,
 	},
 	imageContainer: {
 		position: "relative",
 		width: 90,
 		height: 140,
 		backgroundColor: COLORS.background,
+		borderTopLeftRadius: BORDER_RADIUS.xl,
+		borderBottomLeftRadius: BORDER_RADIUS.xl,
+		overflow: "hidden",
 	},
 	image: {
 		width: "100%",
@@ -69,6 +90,23 @@ const styles = StyleSheet.create({
 	},
 	placeholderText: {
 		fontSize: FONT_SIZES["2xl"],
+	},
+	favoriteIcon: {
+		position: "absolute",
+		bottom: 10,
+		right: 10,
+		backgroundColor: COLORS.surface,
+		borderRadius: BORDER_RADIUS.full,
+		width: 40,
+		height: 40,
+		justifyContent: "center",
+		alignItems: "center",
+		zIndex: 10,
+		shadowColor: COLORS.text950,
+		shadowOffset: { width: 0, height: 1 },
+		shadowOpacity: 0.2,
+		shadowRadius: 5,
+		elevation: 4,
 	},
 	content: {
 		flex: 1,

@@ -100,6 +100,10 @@ export const MESSAGES = {
 	ERROR_LOAD_FAVORITES: "Error al cargar favoritos",
 	ERROR_GENERIC: "Ocurrió un error. Intenta nuevamente",
 
+	// Éxito
+	SUCCESS_ADDED_FAVORITE: "Agregado a favoritos",
+	SUCCESS_REMOVED_FAVORITE: "Removido de favoritos",
+
 	// Avisos
 	OFFLINE_MODE: "Modo sin conexión - Solo puedes ver favoritos",
 	SEARCH_REQUIRES_CONNECTION: "Necesitas conexión a Internet para buscar",
@@ -108,6 +112,28 @@ export const MESSAGES = {
 
 	// Pantalla de búsqueda
 	SEARCH_PLACEHOLDER: "Buscar libros...",
+	SEARCH_TITLE: "Busca un libro para comenzar",
 	SEARCH_BUTTON: "Buscar",
 	RESULTS_FOUND: (count: number) => `${count} resultado${count !== 1 ? "s" : ""} encontrado${count !== 1 ? "s" : ""}`,
+
+	// Pantalla de detalle
+	FAVORITE_BUTTON: "Agregar a favoritos",
+	UNFAVORITE_BUTTON: "Quitar de favoritos",
+	SHARE_BUTTON: "Compartir",
+	AUTHOR: "Autor",
+	AUTHORS: "Autores",
+	PUBLISHER: "Editorial",
+	PUBLISHED: "Publicado",
+	PAGES: "Páginas",
+	LANGUAGE: "Idioma",
+	CATEGORIES: "Categorías",
+	DESCRIPTION: "Descripción",
+	NO_DESCRIPTION: "Sin descripción disponible",
+
+	// Pantalla de favoritos
+	FAVORITES_TITLE: "Mis Favoritos",
+	EMPTY_FAVORITES: "No tienes libros marcados como favoritos",
+	DELETE_FAVORITE: "¿Deseas quitar este libro de favoritos?",
+	CANCEL: "Cancelar",
+	DELETE: "Eliminar",
 };

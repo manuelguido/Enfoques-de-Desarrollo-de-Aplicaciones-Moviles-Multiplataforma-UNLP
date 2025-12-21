@@ -1,7 +1,8 @@
-import React, { useState } from "react";
-import { View, Text, StyleSheet, ScrollView, Image } from "react-native";
+import React, { useEffect, useState } from "react";
+import { View, Text, StyleSheet, ScrollView, Image, TouchableOpacity, ActivityIndicator, Alert } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Book } from "../models/Book";
+import { useFavorites } from "../context/FavoritesContext";
 import { COLORS, SPACING, FONT_SIZES, MESSAGES, BORDER_RADIUS, SHADOWS } from "../utils/constants";
 import { formatAuthors, formatLanguage, formatPageCount, getImageUrl } from "../utils/helpers";
 
@@ -13,9 +14,30 @@ interface BookDetailScreenProps {
 /**
  * Pantalla de detalle de un libro
  */
-export function BookDetailScreen({ route }: BookDetailScreenProps) {
+export function BookDetailScreen({ route, navigation }: BookDetailScreenProps) {
 	const { book: initialBook } = route.params;
-	const [book] = useState<Book>(initialBook);
+	const [book, setBook] = useState<Book>(initialBook);
+	const { isFavorite, addFavorite, removeFavorite, getFavorite } = useFavorites();
+
+	const bookIsFavorite = isFavorite(book.id);
+
+	/**
+	 * Manejar agregar/quitar favorito
+	 */
+	const handleToggleFavorite = async () => {
+		try {
+			if (bookIsFavorite) {
+				await removeFavorite(book.id);
+				Alert.alert("", MESSAGES.SUCCESS_REMOVED_FAVORITE);
+			} else {
+				await addFavorite(book);
+				Alert.alert("", MESSAGES.SUCCESS_ADDED_FAVORITE);
+			}
+		} catch (error) {
+			Alert.alert("Error", MESSAGES.ERROR_GENERIC);
+			console.error("Error agregando/quitando favorito:", error);
+		}
+	};
 
 	const imageUrl = getImageUrl(book, "large");
 
@@ -99,6 +121,13 @@ export function BookDetailScreen({ route }: BookDetailScreenProps) {
 							<Text style={styles.description}>{book.description}</Text>
 						</View>
 					)}
+
+					{/* Botones de acción */}
+					<View style={styles.actionsContainer}>
+						<TouchableOpacity style={[styles.button, bookIsFavorite ? styles.buttonRemove : styles.buttonAdd]} onPress={handleToggleFavorite}>
+							<Text style={styles.buttonText}>{bookIsFavorite ? "Quitar de favoritos" : "Agregar a favoritos"}</Text>
+						</TouchableOpacity>
+					</View>
 				</View>
 			</ScrollView>
 		</SafeAreaView>
@@ -185,5 +214,23 @@ const styles = StyleSheet.create({
 		gap: SPACING.md,
 		marginTop: SPACING.lg,
 		marginBottom: SPACING.xl,
+	},
+	button: {
+		paddingVertical: SPACING.md,
+		borderRadius: BORDER_RADIUS.md,
+		justifyContent: "center",
+		alignItems: "center",
+		...SHADOWS.md,
+	},
+	buttonAdd: {
+		backgroundColor: COLORS.success,
+	},
+	buttonRemove: {
+		backgroundColor: COLORS.error,
+	},
+	buttonText: {
+		fontSize: FONT_SIZES.base,
+		fontWeight: "600",
+		color: COLORS.surface,
 	},
 });

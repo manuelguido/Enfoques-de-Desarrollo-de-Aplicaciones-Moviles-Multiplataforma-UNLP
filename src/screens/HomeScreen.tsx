@@ -6,7 +6,6 @@ import { BookCard } from "../components/BookCard";
 import { OfflineNotice } from "../components/OfflineNotice";
 import { googleBooksAPI } from "../services/googleBooksAPI";
 import { connectivityService } from "../services/connectivityService";
-import { useFavorites } from "../context/FavoritesContext";
 import { COLORS, SPACING, FONT_SIZES, MESSAGES } from "../utils/constants";
 import { IconlyBookDuotone } from "../components/iconly/duotone/IconlyBookDuotone";
 import { IconlySearchDuotone } from "../components/iconly/duotone/IconlySearchDuotone";
@@ -23,7 +22,6 @@ export function HomeScreen({ navigation }: HomeScreenProps) {
 	const [books, setBooks] = useState<Book[]>([]);
 	const [loading, setLoading] = useState(false);
 	const [isOnline, setIsOnline] = useState(true);
-	const { isFavorite } = useFavorites();
 
 	/**
 	 * Limpiar búsqueda
@@ -135,13 +133,13 @@ export function HomeScreen({ navigation }: HomeScreenProps) {
 					<FlatList
 						data={books}
 						keyExtractor={(item) => item.id}
-						renderItem={({ item }) => <BookCard book={item} onPress={() => handleBookPress(item)} isFavorite={isFavorite(item.id)} />}
+						renderItem={({ item }) => <BookCard book={item} onPress={() => handleBookPress(item)} />}
 						contentContainerStyle={styles.listContent}
 						ListEmptyComponent={
 							books.length === 0 ? (
 								<View style={styles.emptyContainer}>
-									<Text style={styles.emptyText}>Busca un libro para comenzar</Text>
-									<Text style={styles.emptyMessage}>{isOnline ? "Ingresa un término de búsqueda" : MESSAGES.OFFLINE_MODE}</Text>
+									<Text style={styles.emptyMessage}>{MESSAGES.SEARCH_TITLE}</Text>
+									<Text style={styles.emptySubtext}>{isOnline ? "Ingresa un término de búsqueda" : MESSAGES.OFFLINE_MODE}</Text>
 								</View>
 							) : null
 						}
@@ -161,8 +159,6 @@ const styles = StyleSheet.create({
 		paddingHorizontal: SPACING.md,
 		paddingVertical: SPACING.lg,
 		backgroundColor: "#ffffff",
-		// borderBottomRightRadius: 16,
-		// borderBottomLeftRadius: 16,
 		shadowColor: "#000",
 		shadowOffset: { width: 0, height: 10 },
 		shadowOpacity: 0.1,
@@ -219,6 +215,8 @@ const styles = StyleSheet.create({
 		fontWeight: "bold",
 	},
 	searchButton: {
+		flexDirection: "row",
+		gap: SPACING.sm,
 		backgroundColor: COLORS.primary,
 		borderRadius: 100,
 		paddingVertical: SPACING.md,
@@ -228,7 +226,6 @@ const styles = StyleSheet.create({
 		minWidth: 50,
 	},
 	searchButtonDisabled: {
-		backgroundColor: COLORS.text700,
 		opacity: 0.6,
 	},
 	searchButtonText: {
@@ -238,16 +235,18 @@ const styles = StyleSheet.create({
 	},
 	listContainer: {
 		flex: 1,
-		paddingTop: SPACING.lg,
+		justifyContent: "center",
+		paddingHorizontal: SPACING.md,
 	},
 	resultsInfo: {
-		fontSize: FONT_SIZES.sm,
 		color: COLORS.text700,
-		paddingHorizontal: SPACING.md,
-		marginBottom: SPACING.sm,
+		fontSize: FONT_SIZES.sm,
+		marginBottom: SPACING.md,
+		marginTop: SPACING.lg,
 	},
 	listContent: {
-		paddingBottom: 100,
+		gap: SPACING.md,
+		paddingBottom: SPACING.lg,
 	},
 	loadingContainer: {
 		flex: 1,
@@ -260,13 +259,17 @@ const styles = StyleSheet.create({
 		alignItems: "center",
 		paddingVertical: SPACING["2xl"],
 	},
-	emptyText: {
-		fontSize: FONT_SIZES["3xl"],
-		marginBottom: SPACING.md,
-	},
 	emptyMessage: {
+		fontSize: FONT_SIZES.lg,
+		fontWeight: "600",
+		color: COLORS.text950,
+		marginBottom: SPACING.sm,
+		textAlign: "center",
+	},
+	emptySubtext: {
 		fontSize: FONT_SIZES.base,
 		color: COLORS.text700,
 		textAlign: "center",
+		paddingHorizontal: SPACING.md,
 	},
 });
