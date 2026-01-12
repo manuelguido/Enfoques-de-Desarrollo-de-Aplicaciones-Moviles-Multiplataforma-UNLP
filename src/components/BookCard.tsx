@@ -9,9 +9,11 @@ import { useFavoriteToggle } from "../hooks/useFavoriteToggle";
 interface BookCardProps {
 	book: Book;
 	onPress: () => void;
+	rating?: number;
+	showRating?: boolean;
 }
 
-export function BookCard({ book, onPress }: BookCardProps) {
+export function BookCard({ book, onPress, rating = 0, showRating = false }: BookCardProps) {
 	const imageUrl = getImageUrl(book, "small");
 	const { toggleFavorite, isFavorite } = useFavoriteToggle();
 
@@ -52,6 +54,16 @@ export function BookCard({ book, onPress }: BookCardProps) {
 				</Text>
 
 				{book.publishedYear && <Text style={styles.year}>{formatPublishedYear(book.publishedYear)}</Text>}
+
+				{showRating && rating > 0 && (
+					<View style={styles.ratingContainer}>
+						<Text style={styles.ratingStars}>
+							{"*".repeat(Math.floor(rating))}
+							{rating % 1 >= 0.5 ? "+" : ""}
+						</Text>
+						<Text style={styles.ratingText}>{rating.toFixed(1)}/5</Text>
+					</View>
+				)}
 			</View>
 		</TouchableOpacity>
 	);
@@ -104,7 +116,7 @@ const styles = StyleSheet.create({
 		zIndex: 10,
 		shadowColor: COLORS.text950,
 		shadowOffset: { width: 0, height: 1 },
-		shadowOpacity: 0.2,
+		shadowOpacity: 0.20,
 		shadowRadius: 5,
 		elevation: 4,
 	},
@@ -128,5 +140,19 @@ const styles = StyleSheet.create({
 	year: {
 		fontSize: FONT_SIZES.sm,
 		color: COLORS.text700,
+	},
+	ratingContainer: {
+		flexDirection: "row",
+		alignItems: "center",
+		marginTop: SPACING.xs,
+	},
+	ratingStars: {
+		fontSize: FONT_SIZES.sm,
+		marginRight: SPACING.xs,
+	},
+	ratingText: {
+		fontSize: FONT_SIZES.sm,
+		fontWeight: "600",
+		color: COLORS.primary,
 	},
 });

@@ -3,7 +3,7 @@ import { Favorite } from "../models/Favorite";
 
 /**
  * Servicio para manejar almacenamiento local usando AsyncStorage
- * Persiste los favoritos en el dispositivo
+ * Persiste los favoritos y sus puntajes en el dispositivo
  */
 
 const STORAGE_KEYS = {
@@ -15,7 +15,6 @@ class StorageService {
 		try {
 			const favorites = await this.getFavorites();
 
-			// Reemplazar si ya existe, agregar si no
 			const index = favorites.findIndex((f) => f.id === favorite.id);
 			if (index >= 0) {
 				favorites[index] = favorite;
@@ -69,6 +68,29 @@ class StorageService {
 		} catch (error) {
 			console.error("Error verificando favorito:", error);
 			return false;
+		}
+	}
+
+	async updateFavoriteRating(bookId: string, rating: number): Promise<Favorite | null> {
+		try {
+			const favorite = await this.getFavorite(bookId);
+
+			if (!favorite) {
+				console.error("Favorito no encontrado:", bookId);
+				return null;
+			}
+
+			const updated: Favorite = {
+				...favorite,
+				rating: Math.max(0, Math.min(5, rating)),
+				updatedDate: Date.now(),
+			};
+
+			await this.saveFavorite(updated);
+			return updated;
+		} catch (error) {
+			console.error("Error actualizando rating:", error);
+			throw error;
 		}
 	}
 

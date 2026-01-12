@@ -2,7 +2,10 @@ import React, { useEffect, useState } from "react";
 import { View, Text, StyleSheet, ScrollView, Image, TouchableOpacity, ActivityIndicator, Alert } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Book } from "../models/Book";
+import { StarRating } from "../components/StarRating";
 import { useFavorites } from "../context/FavoritesContext";
+import { shareService } from "../services/shareService";
+import { connectivityService } from "../services/connectivityService";
 import { COLORS, SPACING, FONT_SIZES, MESSAGES, BORDER_RADIUS, SHADOWS } from "../utils/constants";
 import { formatAuthors, formatLanguage, formatPageCount, getImageUrl } from "../utils/helpers";
 
@@ -17,12 +20,21 @@ interface BookDetailScreenProps {
 export function BookDetailScreen({ route, navigation }: BookDetailScreenProps) {
 	const { book: initialBook } = route.params;
 	const [book, setBook] = useState<Book>(initialBook);
-	const { isFavorite, addFavorite, removeFavorite, getFavorite } = useFavorites();
+	const [rating, setRating] = useState(0);
+	const [isShareLoading, setIsShareLoading] = useState(false);
+	const { isFavorite, addFavorite, removeFavorite, updateRating, getFavorite } = useFavorites();
 
 	const bookIsFavorite = isFavorite(book.id);
+	const favorite = getFavorite(book.id);
+
+	useEffect(() => {
+		if (favorite) {
+			setRating(favorite.rating);
+		}
+	}, [favorite]);
 
 	/**
-	 * Manejar agregar/quitar favorito
+	 * Manejar agregar/remover favorito
 	 */
 	const handleToggleFavorite = async () => {
 		try {
@@ -35,7 +47,53 @@ export function BookDetailScreen({ route, navigation }: BookDetailScreenProps) {
 			}
 		} catch (error) {
 			Alert.alert("Error", MESSAGES.ERROR_GENERIC);
-			console.error("Error agregando/quitando favorito:", error);
+			console.error("Error toggling favorite:", error);
+		}
+	};
+
+	/**
+	 * Actualización de rating
+	 */
+	const handleRatingChange = async (newRating: number) => {
+		try {
+			if (bookIsFavorite) {
+				await updateRating(book.id, newRating);
+				setRating(newRating);
+				Alert.alert("", MESSAGES.SUCCESS_RATING_UPDATED);
+			} else {
+				// Primero agregar como favorito
+				await addFavorite(book);
+				await updateRating(book.id, newRating);
+				setRating(newRating);
+				Alert.alert("", MESSAGES.SUCCESS_ADDED_FAVORITE);
+			}
+		} catch (error) {
+			Alert.alert("Error", MESSAGES.ERROR_GENERIC);
+			console.error("Error updating rating:", error);
+		}
+	};
+
+	/**
+	 * Manejar compartir
+	 */
+	const handleShare = async () => {
+		setIsShareLoading(true);
+		try {
+			const online = await connectivityService.isOnline();
+			if (!online) {
+				Alert.alert("Error", "Necesitas conexión a Internet para compartir");
+				return;
+			}
+
+			const success = await shareService.shareBook(book);
+			if (!success) {
+				Alert.alert("", "No hay aplicaciones disponibles para compartir");
+			}
+		} catch (error) {
+			Alert.alert("Error", MESSAGES.ERROR_GENERIC);
+			console.error("Error sharing:", error);
+		} finally {
+			setIsShareLoading(false);
 		}
 	};
 
@@ -122,10 +180,20 @@ export function BookDetailScreen({ route, navigation }: BookDetailScreenProps) {
 						</View>
 					)}
 
+					{/* Rating */}
+					<View style={styles.ratingSection}>
+						<Text style={styles.label}>Mi Puntaje:</Text>
+						<StarRating rating={rating} onRatingChange={handleRatingChange} interactive={true} size="large" />
+					</View>
+
 					{/* Botones de acción */}
 					<View style={styles.actionsContainer}>
 						<TouchableOpacity style={[styles.button, bookIsFavorite ? styles.buttonRemove : styles.buttonAdd]} onPress={handleToggleFavorite}>
-							<Text style={styles.buttonText}>{bookIsFavorite ? "Quitar de favoritos" : "Agregar a favoritos"}</Text>
+							<Text style={styles.buttonText}>{bookIsFavorite ? "Quitar" : "Agregar"} favorito</Text>
+						</TouchableOpacity>
+
+						<TouchableOpacity style={[styles.button, styles.buttonShare]} onPress={handleShare} disabled={isShareLoading}>
+							{isShareLoading ? <ActivityIndicator color={COLORS.surface} /> : <Text style={styles.buttonText}>Compartir</Text>}
 						</TouchableOpacity>
 					</View>
 				</View>
@@ -209,6 +277,13 @@ const styles = StyleSheet.create({
 		lineHeight: 22,
 		textAlign: "justify",
 	},
+	ratingSection: {
+		marginVertical: SPACING.md,
+		paddingVertical: SPACING.md,
+		backgroundColor: COLORS.surface,
+		borderRadius: BORDER_RADIUS.md,
+		paddingHorizontal: SPACING.md,
+	},
 	actionsContainer: {
 		flexDirection: "column",
 		gap: SPACING.md,
@@ -227,6 +302,9 @@ const styles = StyleSheet.create({
 	},
 	buttonRemove: {
 		backgroundColor: COLORS.error,
+	},
+	buttonShare: {
+		backgroundColor: COLORS.primary,
 	},
 	buttonText: {
 		fontSize: FONT_SIZES.base,

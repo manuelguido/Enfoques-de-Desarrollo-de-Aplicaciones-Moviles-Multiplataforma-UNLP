@@ -29,7 +29,7 @@ export function FavoritesScreen({ navigation }: FavoritesScreenProps) {
 	/**
 	 * Renderizar favorito
 	 */
-	const renderFavoriteItem = useCallback(({ item }: { item: Favorite }) => <BookCard book={item} onPress={() => handleBookPress(item)} />, [handleBookPress]);
+	const renderFavoriteItem = useCallback(({ item }: { item: Favorite }) => <BookCard book={item} onPress={() => handleBookPress(item)} rating={item.rating} showRating={item.rating > 0} />, [handleBookPress]);
 
 	const favorites = favoritesState.favorites || [];
 	const isEmpty = favorites.length === 0;

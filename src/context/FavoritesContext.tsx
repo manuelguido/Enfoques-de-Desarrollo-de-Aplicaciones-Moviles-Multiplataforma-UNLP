@@ -1,7 +1,7 @@
 import React, { createContext, useReducer, useCallback, useEffect, ReactNode } from "react";
 import { Favorite, FavoritesState, FavoritesAction } from "../models/Favorite";
 import { Book } from "../models/Book";
-import { createFavorite } from "../models/Favorite";
+import { createFavorite, updateFavoriteRating } from "../models/Favorite";
 import { storageService } from "../services/storageService";
 
 /**
@@ -11,6 +11,7 @@ export interface FavoritesContextType {
 	state: FavoritesState;
 	addFavorite: (book: Book) => Promise<void>;
 	removeFavorite: (bookId: string) => Promise<void>;
+	updateRating: (bookId: string, rating: number) => Promise<void>;
 	isFavorite: (bookId: string) => boolean;
 	getFavorite: (bookId: string) => Favorite | undefined;
 	loadFavorites: () => Promise<void>;
@@ -49,6 +50,15 @@ function favoritesReducer(state: FavoritesState, action: FavoritesAction): Favor
 				error: null,
 			};
 
+		case "UPDATE_RATING": {
+			const { bookId, rating } = action.payload;
+			return {
+				...state,
+				favorites: state.favorites.map((f) => (f.id === bookId ? updateFavoriteRating(f, rating) : f)),
+				error: null,
+			};
+		}
+
 		case "SET_ERROR":
 			return {
 				...state,
@@ -74,7 +84,6 @@ export function FavoritesProvider({ children }: { children: ReactNode }) {
 			const favorites = await storageService.getFavorites();
 			dispatch({ type: "LOAD_FAVORITES", payload: favorites });
 		} catch (error) {
-			console.error("Error al cargar favoritos:", error);
 			const errorMessage = error instanceof Error ? error.message : "Error desconocido";
 			dispatch({ type: "SET_ERROR", payload: errorMessage });
 		}
@@ -82,7 +91,7 @@ export function FavoritesProvider({ children }: { children: ReactNode }) {
 
 	const addFavorite = useCallback(async (book: Book) => {
 		try {
-			const favorite = createFavorite(book);
+			const favorite = createFavorite(book, 0);
 			await storageService.saveFavorite(favorite);
 			dispatch({ type: "ADD_FAVORITE", payload: favorite });
 		} catch (error) {
@@ -97,7 +106,18 @@ export function FavoritesProvider({ children }: { children: ReactNode }) {
 			await storageService.removeFavorite(bookId);
 			dispatch({ type: "REMOVE_FAVORITE", payload: bookId });
 		} catch (error) {
-			const errorMessage = error instanceof Error ? error.message : "Error al quitar de favoritos";
+			const errorMessage = error instanceof Error ? error.message : "Error al remover de favoritos";
+			dispatch({ type: "SET_ERROR", payload: errorMessage });
+			throw error;
+		}
+	}, []);
+
+	const updateRating = useCallback(async (bookId: string, rating: number) => {
+		try {
+			await storageService.updateFavoriteRating(bookId, rating);
+			dispatch({ type: "UPDATE_RATING", payload: { bookId, rating } });
+		} catch (error) {
+			const errorMessage = error instanceof Error ? error.message : "Error al actualizar rating";
 			dispatch({ type: "SET_ERROR", payload: errorMessage });
 			throw error;
 		}
@@ -125,6 +145,7 @@ export function FavoritesProvider({ children }: { children: ReactNode }) {
 		state,
 		addFavorite,
 		removeFavorite,
+		updateRating,
 		isFavorite,
 		getFavorite,
 		loadFavorites,

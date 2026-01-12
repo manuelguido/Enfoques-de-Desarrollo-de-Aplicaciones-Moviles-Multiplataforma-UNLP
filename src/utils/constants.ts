@@ -103,6 +103,8 @@ export const MESSAGES = {
 	// Éxito
 	SUCCESS_ADDED_FAVORITE: "Agregado a favoritos",
 	SUCCESS_REMOVED_FAVORITE: "Removido de favoritos",
+	SUCCESS_RATING_UPDATED: "Puntaje actualizado",
+	SUCCESS_SHARED: "Compartido exitosamente",
 
 	// Avisos
 	OFFLINE_MODE: "Modo sin conexión - Solo puedes ver favoritos",
@@ -136,4 +138,11 @@ export const MESSAGES = {
 	DELETE_FAVORITE: "¿Deseas quitar este libro de favoritos?",
 	CANCEL: "Cancelar",
 	DELETE: "Eliminar",
+};
+
+// Configuración de ratings
+export const RATING_CONFIG = {
+	MIN: 0,
+	MAX: 5,
+	STEP: 1,
 };
