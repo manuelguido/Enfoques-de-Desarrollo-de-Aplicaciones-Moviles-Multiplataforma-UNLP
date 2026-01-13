@@ -3,8 +3,9 @@ import { View, Text, StyleSheet, TouchableOpacity, Image } from "react-native";
 import { Book } from "../models/Book";
 import { COLORS, FONT_SIZES, SPACING, BORDER_RADIUS } from "../utils/constants";
 import { formatAuthors, formatPublishedYear, getImageUrl } from "../utils/helpers";
-import { IconlyStarDuotone } from "./iconly/duotone/IconlyStarDuotone";
+import { IconlyFavoriteDuotone } from "./iconly/duotone/IconlyFavoriteDuotone";
 import { useFavoriteToggle } from "../hooks/useFavoriteToggle";
+import { StarRating } from "../components/StarRating";
 
 interface BookCardProps {
 	book: Book;
@@ -29,7 +30,7 @@ export function BookCard({ book, onPress, rating = 0, showRating = false }: Book
 					toggleFavorite(book);
 				}}
 				activeOpacity={0.7}>
-				<IconlyStarDuotone size={20} color={isBookFavorite ? COLORS.primary600 : COLORS.text400} />
+				<IconlyFavoriteDuotone size={20} color={isBookFavorite ? COLORS.primary600 : COLORS.text400} />
 			</TouchableOpacity>
 
 			{/* Imagen */}
@@ -55,15 +56,7 @@ export function BookCard({ book, onPress, rating = 0, showRating = false }: Book
 
 				{book.publishedYear && <Text style={styles.year}>{formatPublishedYear(book.publishedYear)}</Text>}
 
-				{showRating && rating > 0 && (
-					<View style={styles.ratingContainer}>
-						<Text style={styles.ratingStars}>
-							{"*".repeat(Math.floor(rating))}
-							{rating % 1 >= 0.5 ? "+" : ""}
-						</Text>
-						<Text style={styles.ratingText}>{rating.toFixed(1)}/5</Text>
-					</View>
-				)}
+				{showRating && rating && <StarRating rating={rating} interactive={false} size="small" />}
 			</View>
 		</TouchableOpacity>
 	);
@@ -116,7 +109,7 @@ const styles = StyleSheet.create({
 		zIndex: 10,
 		shadowColor: COLORS.text950,
 		shadowOffset: { width: 0, height: 1 },
-		shadowOpacity: 0.20,
+		shadowOpacity: 0.2,
 		shadowRadius: 5,
 		elevation: 4,
 	},

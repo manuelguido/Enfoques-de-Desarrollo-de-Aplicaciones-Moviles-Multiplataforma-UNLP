@@ -19,7 +19,7 @@ interface BookDetailScreenProps {
  */
 export function BookDetailScreen({ route, navigation }: BookDetailScreenProps) {
 	const { book: initialBook } = route.params;
-	const [book, setBook] = useState<Book>(initialBook);
+	const [book] = useState<Book>(initialBook);
 	const [rating, setRating] = useState(0);
 	const [isShareLoading, setIsShareLoading] = useState(false);
 	const { isFavorite, addFavorite, removeFavorite, updateRating, getFavorite } = useFavorites();
@@ -61,7 +61,6 @@ export function BookDetailScreen({ route, navigation }: BookDetailScreenProps) {
 				setRating(newRating);
 				Alert.alert("", MESSAGES.SUCCESS_RATING_UPDATED);
 			} else {
-				// Primero agregar como favorito
 				await addFavorite(book);
 				await updateRating(book.id, newRating);
 				setRating(newRating);
@@ -100,7 +99,7 @@ export function BookDetailScreen({ route, navigation }: BookDetailScreenProps) {
 	const imageUrl = getImageUrl(book, "large");
 
 	return (
-		<SafeAreaView style={styles.container}>
+		<SafeAreaView style={styles.container} edges={[]}>
 			<ScrollView showsVerticalScrollIndicator={false}>
 				{/* Imagen */}
 				<View style={styles.imageSection}>
@@ -183,7 +182,7 @@ export function BookDetailScreen({ route, navigation }: BookDetailScreenProps) {
 					{/* Rating */}
 					<View style={styles.ratingSection}>
 						<Text style={styles.label}>Mi Puntaje:</Text>
-						<StarRating rating={rating} onRatingChange={handleRatingChange} interactive={true} size="large" />
+						<StarRating rating={rating} onRatingChange={handleRatingChange} interactive={true} size="large" showRatingNumber={true} />
 					</View>
 
 					{/* Botones de acción */}
@@ -206,6 +205,7 @@ const styles = StyleSheet.create({
 	container: {
 		flex: 1,
 		backgroundColor: COLORS.background,
+		paddingVertical: 0,
 	},
 	imageSection: {
 		justifyContent: "center",
