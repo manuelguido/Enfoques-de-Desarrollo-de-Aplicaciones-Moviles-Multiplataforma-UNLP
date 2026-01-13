@@ -8,6 +8,9 @@ import { shareService } from "../services/shareService";
 import { connectivityService } from "../services/connectivityService";
 import { COLORS, SPACING, FONT_SIZES, MESSAGES, BORDER_RADIUS, SHADOWS } from "../utils/constants";
 import { formatAuthors, formatLanguage, formatPageCount, getImageUrl } from "../utils/helpers";
+import { IconlyRemoveBold } from "../components/iconly/bold/IconlyRemoveBold";
+import { IconlyPlusBold } from "../components/iconly/bold/IconlyPlusBold";
+import { IconlyShareBold } from "../components/iconly/bold/IconlyShareBold";
 
 interface BookDetailScreenProps {
 	route: any;
@@ -188,11 +191,15 @@ export function BookDetailScreen({ route, navigation }: BookDetailScreenProps) {
 					{/* Botones de acción */}
 					<View style={styles.actionsContainer}>
 						<TouchableOpacity style={[styles.button, bookIsFavorite ? styles.buttonRemove : styles.buttonAdd]} onPress={handleToggleFavorite}>
-							<Text style={styles.buttonText}>{bookIsFavorite ? "Quitar" : "Agregar"} favorito</Text>
+							<Text style={styles.buttonText}>
+								{bookIsFavorite ? "Quitar favorito" : "Agregar favorito"}
+							</Text>
+							{bookIsFavorite ? <IconlyRemoveBold size={22} color={COLORS.surface} /> : <IconlyPlusBold size={22} color={COLORS.surface} />}
 						</TouchableOpacity>
 
 						<TouchableOpacity style={[styles.button, styles.buttonShare]} onPress={handleShare} disabled={isShareLoading}>
 							{isShareLoading ? <ActivityIndicator color={COLORS.surface} /> : <Text style={styles.buttonText}>Compartir</Text>}
+							<IconlyShareBold size={22} color={COLORS.surface} />
 						</TouchableOpacity>
 					</View>
 				</View>
@@ -293,8 +300,10 @@ const styles = StyleSheet.create({
 	button: {
 		paddingVertical: SPACING.md,
 		borderRadius: BORDER_RADIUS.md,
+		flexDirection: "row",
 		justifyContent: "center",
 		alignItems: "center",
+		gap: SPACING.xs,
 		...SHADOWS.md,
 	},
 	buttonAdd: {
