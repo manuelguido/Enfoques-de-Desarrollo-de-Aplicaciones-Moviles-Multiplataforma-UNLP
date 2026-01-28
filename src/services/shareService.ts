@@ -1,4 +1,4 @@
-import * as Sharing from "expo-sharing";
+import { Share } from "react-native";
 import { Book } from "../models/Book";
 
 /**
@@ -31,31 +31,20 @@ class ShareService {
 	 */
 	async shareBook(book: Book): Promise<boolean> {
 		try {
-			if (!Sharing.isAvailableAsync) {
-				console.warn("Compartir no está disponible en esta plataforma");
-				return false;
-			}
-
-			const available = await Sharing.isAvailableAsync();
-			if (!available) {
-				console.error("No hay aplicaciones disponibles para compartir");
-				return false;
-			}
-
 			const { title, message } = this.generateShareContent(book);
 
-			await Sharing.shareAsync(message, {
-				mimeType: "text/plain",
-				dialogTitle: `Compartir: ${title}`,
-			});
+			const result = await Share.share(
+				{
+					message: message,
+					title: title,
+				},
+				{
+					dialogTitle: `Compartir: ${title}`,
+				},
+			);
 
-			return true;
+			return result.action === Share.sharedAction;
 		} catch (error) {
-			if (error instanceof Error && error.message === "User did not share") {
-				console.log("Usuario canceló la acción de compartir");
-				return false;
-			}
-			console.error("Error compartiendo libro:", error);
 			return false;
 		}
 	}
