@@ -6,6 +6,7 @@ import { BookCard } from "../components/BookCard";
 import { OfflineNotice } from "../components/OfflineNotice";
 import { googleBooksAPI } from "../services/googleBooksAPI";
 import { connectivityService } from "../services/connectivityService";
+import { useFavorites } from "../context/FavoritesContext";
 import { COLORS, SPACING, FONT_SIZES, MESSAGES } from "../utils/constants";
 import { IconlyBookDuotone } from "../components/iconly/duotone/IconlyBookDuotone";
 import { IconlySearchDuotone } from "../components/iconly/duotone/IconlySearchDuotone";
@@ -22,6 +23,16 @@ export function HomeScreen({ navigation }: HomeScreenProps) {
 	const [books, setBooks] = useState<Book[]>([]);
 	const [loading, setLoading] = useState(false);
 	const [isOnline, setIsOnline] = useState(true);
+
+	const { getFavorite } = useFavorites();
+
+	const getBookRating = useCallback(
+		(book: Book) => {
+			const favorite = getFavorite(book.id);
+			return favorite ? favorite.rating : 0;
+		},
+		[getFavorite],
+	);
 
 	/**
 	 * Limpiar búsqueda
@@ -71,7 +82,7 @@ export function HomeScreen({ navigation }: HomeScreenProps) {
 		(book: Book) => {
 			navigation.navigate("BookDetailScreen", { book });
 		},
-		[navigation]
+		[navigation],
 	);
 
 	/**
@@ -133,7 +144,10 @@ export function HomeScreen({ navigation }: HomeScreenProps) {
 					<FlatList
 						data={books}
 						keyExtractor={(item) => item.id}
-						renderItem={({ item }) => <BookCard book={item} onPress={() => handleBookPress(item)} />}
+						renderItem={({ item }) => {
+							const rating = getBookRating(item);
+							return <BookCard book={item} onPress={() => handleBookPress(item)} rating={rating} showRating={rating > 0} />;
+						}}
 						contentContainerStyle={styles.listContent}
 						ListEmptyComponent={
 							books.length === 0 ? (
