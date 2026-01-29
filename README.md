@@ -4,7 +4,7 @@
 
 ### Opción 1:
 
-1. Instalar el archivo APK `BooksApp.apk` de este directorio en el dispositivo.
+1. Instalar el archivo APK [BooksApp.apk](https://github.com/manuelguido/Enfoques-de-Desarrollo-de-Aplicaciones-Moviles-Multiplataforma-UNLP/raw/2286d704c608cef751bcdd404aae891d25ce5035/BooksApp.apk) de este directorio en el dispositivo.
 
 ### Opción 2:
 
