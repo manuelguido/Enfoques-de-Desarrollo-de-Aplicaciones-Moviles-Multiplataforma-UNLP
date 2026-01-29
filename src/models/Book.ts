@@ -116,6 +116,14 @@ export interface GoogleBookItem {
 }
 
 /**
+ * Helper para convertir URLs de HTTP a HTTPS
+ */
+function ensureHttps(url?: string): string | undefined {
+	if (!url) return undefined;
+	return url.replace(/^http:\/\//, "https://");
+}
+
+/**
  * Helper para convertir GoogleBookItem a Book
  */
 export function convertGoogleBookToBook(item: GoogleBookItem): Book {
@@ -140,10 +148,13 @@ export function convertGoogleBookToBook(item: GoogleBookItem): Book {
 		pageCount: volumeInfo.pageCount,
 		language: volumeInfo.language,
 		isbn: volumeInfo.industryIdentifiers?.find((id) => id.type === "ISBN_13" || id.type === "ISBN_10")?.identifier,
-		previewLink: volumeInfo.previewLink,
-		infoLink: volumeInfo.infoLink,
-		thumbnail: volumeInfo.imageLinks?.thumbnail,
-		imageLinks: volumeInfo.imageLinks,
+		previewLink: ensureHttps(volumeInfo.previewLink),
+		infoLink: ensureHttps(volumeInfo.infoLink),
+		thumbnail: ensureHttps(volumeInfo.imageLinks?.thumbnail),
+		imageLinks: {
+			smallThumbnail: ensureHttps(volumeInfo.imageLinks?.smallThumbnail),
+			thumbnail: ensureHttps(volumeInfo.imageLinks?.thumbnail),
+		},
 		publisher: volumeInfo.publisher,
 		industryIdentifiers: volumeInfo.industryIdentifiers,
 	};

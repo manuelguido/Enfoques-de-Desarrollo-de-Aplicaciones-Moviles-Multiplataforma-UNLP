@@ -1,5 +1,6 @@
 import React from "react";
-import { View, Text, StyleSheet, TouchableOpacity, Image } from "react-native";
+import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
+import { Image } from "expo-image";
 import { Book } from "../models/Book";
 import { COLORS, FONT_SIZES, SPACING, BORDER_RADIUS } from "../utils/constants";
 import { formatAuthors, formatPublishedYear, getImageUrl } from "../utils/helpers";
