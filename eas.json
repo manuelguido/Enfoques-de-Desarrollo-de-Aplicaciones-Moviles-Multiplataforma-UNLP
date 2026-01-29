@@ -1,0 +1,30 @@
+{
+  "cli": {
+    "version": ">= 16.31.0",
+    "appVersionSource": "remote"
+  },
+  "build": {
+    "android": {
+      "env": {
+        "NODE_ENV": "production",
+        "ANDROID_HOME": "/opt/homebrew/share/android-commandlinetools"
+      }
+    },
+    "development": {
+      "developmentClient": true,
+      "distribution": "internal"
+    },
+    "preview": {
+      "distribution": "internal"
+    },
+    "production": {
+      "autoIncrement": true
+    },
+    "apk": {
+      "distribution": "internal"
+    }
+  },
+  "submit": {
+    "production": {}
+  }
+}
