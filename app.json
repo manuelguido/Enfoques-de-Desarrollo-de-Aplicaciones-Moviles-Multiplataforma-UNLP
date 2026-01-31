@@ -29,7 +29,10 @@
       "favicon": "./assets/favicon.png"
     },
     "extra": {
-      "GOOGLE_BOOKS_API_KEY": "${EXPO_PUBLIC_GOOGLE_BOOKS_API_KEY}"
+      "GOOGLE_BOOKS_API_KEY": "${EXPO_PUBLIC_GOOGLE_BOOKS_API_KEY}",
+      "eas": {
+        "projectId": "ec646afa-82bb-48da-809b-b76de556a0d7"
+      }
     }
   }
 }

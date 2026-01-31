@@ -7,7 +7,15 @@
     "start": "expo start",
     "android": "expo run:android",
     "ios": "expo run:ios",
-    "web": "expo start --web"
+    "web": "expo start --web",
+    "emulator": "$ANDROID_HOME/emulator/emulator -avd Medium_Phone &",
+    "prebuild": "expo prebuild",
+    "prebuild:clean": "expo prebuild --clean",
+    "build:apk": "cd android && ./gradlew assembleRelease && cd .. && echo 'APK generado en: android/app/build/outputs/apk/release/app-release.apk'",
+    "build:apk:debug": "cd android && ./gradlew assembleDebug && cd .. && echo 'APK Debug generado en: android/app/build/outputs/apk/debug/app-debug.apk'",
+    "build:bundle": "cd android && ./gradlew bundleRelease && cd .. && echo 'AAB generado en: android/app/build/outputs/bundle/release/app-release.aab'",
+    "clean:android": "cd android && ./gradlew clean && cd ..",
+    "build:apk:all": "npm run clean:android && npm run build:apk"
   },
   "dependencies": {
     "@react-native-async-storage/async-storage": "^2.2.0",
