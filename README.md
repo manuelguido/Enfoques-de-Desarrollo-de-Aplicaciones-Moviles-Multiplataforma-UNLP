@@ -34,7 +34,7 @@ npm start
 
 5. Correr `npm start` desde el terminal y escanear el código QR generado con la aplicación de la cámara del dispositivo.
 
-## Para generar un APK para android hay que seguir estos pasos (los puntos 1 y 2 solo hay que correrlos la primera vez que se instala el proyexcto, y cada vez que se instala un paquete nuevo, sino solo es necesario el punto 3):
+## Para generar un APK para android hay que seguir estos pasos (los puntos 1 y 2 solo hay que correrlos la primera vez que se instala el proyecto, y cada vez que se instala un paquete nuevo, sino solo es necesario el punto 3):
 
 1. Instalar dependencias:
 
