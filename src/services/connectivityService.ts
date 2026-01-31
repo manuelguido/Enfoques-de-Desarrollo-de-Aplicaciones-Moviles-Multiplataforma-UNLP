@@ -30,7 +30,20 @@ class ConnectivityService {
 		try {
 			await this.checkConnectivity();
 
-			// TODO: ver si es necesario agregar un listener global para cambios de red
+			try {
+				if (Network.addNetworkStateListener) {
+					Network.addNetworkStateListener((state) => {
+						this.currentState = {
+							isConnected: state.isConnected ?? false,
+							isInternetReachable: state.isInternetReachable ?? null,
+							type: state.type || "unknown",
+						};
+						this.notifyListeners(this.currentState);
+					});
+				}
+			} catch (e) {
+				console.warn("No se pudo registrar Network listener:", e);
+			}
 		} catch (error) {
 			console.error("Error inicializando ConnectivityService:", error);
 		}
@@ -48,6 +61,8 @@ class ConnectivityService {
 				isInternetReachable: state.isInternetReachable ?? null,
 				type: state.type || "unknown",
 			};
+
+			this.notifyListeners(this.currentState);
 
 			return this.currentState;
 		} catch (error) {

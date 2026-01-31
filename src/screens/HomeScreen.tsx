@@ -152,7 +152,7 @@ export function HomeScreen({ navigation }: HomeScreenProps) {
 						ListEmptyComponent={
 							books.length === 0 ? (
 								<View style={styles.emptyContainer}>
-									<Text style={styles.emptyMessage}>{MESSAGES.SEARCH_TITLE}</Text>
+									{isOnline && <Text style={styles.emptyMessage}>{MESSAGES.SEARCH_TITLE}</Text>}
 									<Text style={styles.emptySubtext}>{isOnline ? "Ingresa un término de búsqueda" : MESSAGES.OFFLINE_MODE}</Text>
 								</View>
 							) : null

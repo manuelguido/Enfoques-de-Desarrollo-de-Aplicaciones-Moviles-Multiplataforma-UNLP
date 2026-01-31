@@ -32,6 +32,6 @@ const styles = StyleSheet.create({
   text: {
     fontSize: FONT_SIZES.sm,
     fontWeight: '600',
-    color: COLORS.text950,
+    color: COLORS.primary50,
   },
 });
