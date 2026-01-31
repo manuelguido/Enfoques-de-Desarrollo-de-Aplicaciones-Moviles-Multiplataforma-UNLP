@@ -41,8 +41,8 @@ export interface GoogleBooksResponse {
 }
 
 export interface GoogleBookItem {
+	id: string;
 	kind: string;
-	id: string; // TODO: ver si aparece como volumeId en otra parte
 	etag: string;
 	selfLink: string;
 	volumeInfo: {

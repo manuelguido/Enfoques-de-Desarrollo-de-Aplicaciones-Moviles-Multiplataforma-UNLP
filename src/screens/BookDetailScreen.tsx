@@ -184,17 +184,17 @@ export function BookDetailScreen({ route, navigation }: BookDetailScreenProps) {
 					)}
 
 					{/* Rating */}
-					<View style={styles.ratingSection}>
-						<Text style={styles.label}>Mi Puntaje:</Text>
-						<StarRating rating={rating} onRatingChange={handleRatingChange} interactive={true} size="large" showRatingNumber={true} />
-					</View>
+					{bookIsFavorite && (
+						<View style={styles.ratingSection}>
+							<Text style={styles.label}>Mi Puntaje:{bookIsFavorite}</Text>
+							<StarRating rating={rating} onRatingChange={handleRatingChange} interactive={true} size="large" showRatingNumber={true} />
+						</View>
+					)}
 
 					{/* Botones de acción */}
 					<View style={styles.actionsContainer}>
 						<TouchableOpacity style={[styles.button, bookIsFavorite ? styles.buttonRemove : styles.buttonAdd]} onPress={handleToggleFavorite}>
-							<Text style={styles.buttonText}>
-								{bookIsFavorite ? "Quitar favorito" : "Agregar favorito"}
-							</Text>
+							<Text style={styles.buttonText}>{bookIsFavorite ? "Quitar favorito" : "Agregar favorito"}</Text>
 							{bookIsFavorite ? <IconlyRemoveBold size={22} color={COLORS.surface} /> : <IconlyPlusBold size={22} color={COLORS.surface} />}
 						</TouchableOpacity>
 
