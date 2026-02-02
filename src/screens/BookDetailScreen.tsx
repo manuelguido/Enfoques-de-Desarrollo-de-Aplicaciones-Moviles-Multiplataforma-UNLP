@@ -63,12 +63,10 @@ export function BookDetailScreen({ route, navigation }: BookDetailScreenProps) {
 			if (bookIsFavorite) {
 				await updateRating(book.id, newRating);
 				setRating(newRating);
-				Alert.alert("", MESSAGES.SUCCESS_RATING_UPDATED);
 			} else {
 				await addFavorite(book);
 				await updateRating(book.id, newRating);
 				setRating(newRating);
-				Alert.alert("", MESSAGES.SUCCESS_ADDED_FAVORITE);
 			}
 		} catch (error) {
 			Alert.alert("Error", MESSAGES.ERROR_GENERIC);

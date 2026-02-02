@@ -41,13 +41,7 @@ export function StarRating({ rating, maxStars = RATING_CONFIG.MAX, onRatingChang
 							}}
 							disabled={!interactive}
 							style={size === "large" ? styles.star : undefined}>
-							<Text
-								style={{
-									fontSize: starSize,
-									opacity: interactive ? 1 : 0.7,
-								}}>
-								{isFilled ? <IconlyStarDuotone size={starSize} color={COLORS.primary} /> : <IconlyStarDuotone size={starSize} color={COLORS.text600} />}
-							</Text>
+							{isFilled ? <IconlyStarDuotone size={starSize} color={COLORS.primary} /> : <IconlyStarDuotone size={starSize} color={COLORS.text600} />}
 						</TouchableOpacity>
 					);
 				})}
