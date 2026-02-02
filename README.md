@@ -1,73 +1,54 @@
 # Enfoques de Desarrollo de Aplicaciones Móviles Multiplataforma UNLP
 
-## Instrucciones para probar el proyecto en un dispositivo físico
+## Instalación del proyecto
 
-### Opción 1:
-
-1. Instalar el archivo APK [BooksApp.apk](https://github.com/manuelguido/Enfoques-de-Desarrollo-de-Aplicaciones-Moviles-Multiplataforma-UNLP/raw/2286d704c608cef751bcdd404aae891d25ce5035/BooksApp.apk) de este directorio en el dispositivo.
-
-### Opción 2:
-
-1. Abrir un terminal y clonar este repositorio:
-
-```
+```bash
+# Clonar el repositorio
 git clone https://github.com/manuelguido/Enfoques-de-Desarrollo-de-Aplicaciones-Moviles-Multiplataforma-UNLP.git
-```
-
-2. Ir al directorio del proyecto e instalar las dependencias:
-
-```
 cd Enfoques-de-Desarrollo-de-Aplicaciones-Moviles-Multiplataforma-UNLP
+
+# Instalar dependencias
+pnpm install
+
+# Generar el proyecto nativo
+pnpm run prebuild:clean
 ```
 
-```
-npm install
-```
+## Para generar un APK para android hay que seguir estos pasos:
 
-3. Correr el proyecto
-
-```
-npm start
+```bash
+pnpm run build:apk:all
 ```
 
-4. Instalar la [Aplicación Expo Go](https://play.google.com/store/search?q=Expo&c=apps&hl=es_AR).
+El APK se genera en: `android/app/build/outputs/apk/release/app-release.apk`
 
-5. Correr `npm start` desde el terminal y escanear el código QR generado con la aplicación de la cámara del dispositivo.
+---
 
-## Para generar un APK para android hay que seguir estos pasos (los puntos 1 y 2 solo hay que correrlos la primera vez que se instala el proyecto, y cada vez que se instala un paquete nuevo, sino solo es necesario el punto 3):
+## Probar en Dispositivo Android Físico
 
-1. Instalar dependencias:
+### Opción 1: Instalar APK directamente
 
-```
-npm install
-```
+1. Descargar [BooksApp.apk](https://github.com/manuelguido/Enfoques-de-Desarrollo-de-Aplicaciones-Moviles-Multiplataforma-UNLP/raw/2286d704c608cef751bcdd404aae891d25ce5035/BooksApp.apk).
 
-2. Generar el prebuild:
+2. Instalar en el dispositivo.
 
-```
-npx expo prebuild
-```
+### Opción 2: Expo Go
 
-3. Crear el APK:
+1. Instalar [Expo Go](https://play.google.com/store/apps/details?id=host.exp.exponent) en el dispositivo.
+2. Ejecutar `pnpm start`.
+3. Escanear el código QR con la cámara.
 
-```
-npm run build:apk
-```
-
-- Nota, el archivo APK generado se encuentra en:
-
-```
-android/app/build/outputs/apk/release/app-release.apk
-```
+---
 
 ## Configuración de entorno para Android:
 
-Para poder ejecutar la app en un emulador o dispositivo Android desde Expo CLI (usando `npm start` y luego la letra `a`), se debe tener configuradas las siguientes variables de entorno en el archivo de perfil(`~/.zshrc`, `~/.bashrc`):
+Agregar al archivo de perfil (`~/.zshrc` o `~/.bashrc`):
 
-```
-export ANDROID_HOME=/ruta/a/tu/sdk/android
+```bash
+export ANDROID_HOME=$HOME/Library/Android/sdk  # Mac con Android Studio
+# o
+export ANDROID_HOME=/opt/homebrew/share/android-commandlinetools  # Mac con Homebrew
+
 export PATH=$PATH:$ANDROID_HOME/platform-tools
+export PATH=$PATH:$ANDROID_HOME/emulator
 ```
-
-- En Mac con Homebrew, la ruta suele ser `/opt/homebrew/share/android-commandlinetools`.
-- En Linux suele ser `/usr/local/share/android-sdk`.

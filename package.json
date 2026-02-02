@@ -3,6 +3,10 @@
   "license": "0BSD",
   "version": "1.0.0",
   "main": "index.ts",
+  "packageManager": "pnpm@10.28.2",
+  "engines": {
+    "node": ">=20.0.0"
+  },
   "scripts": {
     "start": "expo start",
     "android": "expo run:android",
@@ -15,34 +19,44 @@
     "build:apk:debug": "cd android && ./gradlew assembleDebug && cd .. && echo 'APK Debug generado en: android/app/build/outputs/apk/debug/app-debug.apk'",
     "build:bundle": "cd android && ./gradlew bundleRelease && cd .. && echo 'AAB generado en: android/app/build/outputs/bundle/release/app-release.aab'",
     "clean:android": "cd android && ./gradlew clean && cd ..",
-    "build:apk:all": "npm run clean:android && npm run build:apk"
+    "build:apk:all": "pnpm run clean:android && pnpm run build:apk",
+    "clean": "rm -rf node_modules .expo android/app/build android/.gradle ios/Pods ios/build",
+    "clean:full": "pnpm run clean && rm -rf android ios",
+    "rebuild": "pnpm run clean && pnpm install && pnpm run prebuild:clean",
+    "rebuild:android": "pnpm run clean:android && pnpm run prebuild:clean && pnpm run build:apk",
+    "doctor": "npx expo-doctor"
   },
   "dependencies": {
-    "@react-native-async-storage/async-storage": "^2.2.0",
+    "@react-native-async-storage/async-storage": "2.2.0",
     "@react-navigation/bottom-tabs": "^7.8.12",
     "@react-navigation/native": "^7.1.25",
     "@react-navigation/native-stack": "^7.8.6",
     "axios": "^1.13.2",
-    "expo": "~54.0.29",
-    "expo-constants": "^18.0.12",
-    "expo-image": "^3.0.11",
-    "expo-network": "^8.0.8",
-    "expo-sharing": "^14.0.8",
-    "expo-splash-screen": "^31.0.12",
+    "expo": "~54.0.33",
+    "expo-constants": "~18.0.12",
+    "expo-image": "~3.0.11",
+    "expo-network": "~8.0.8",
+    "expo-sharing": "~14.0.8",
+    "expo-splash-screen": "~31.0.12",
     "expo-status-bar": "~3.0.9",
+    "memoize-one": "^6.0.0",
     "react": "19.1.0",
-    "react-dom": "19.1.0",
     "react-native": "0.81.5",
-    "react-native-elements": "^3.4.3",
-    "react-native-safe-area-context": "^5.6.2",
+    "react-native-safe-area-context": "~5.6.0",
     "react-native-screens": "~4.16.0",
-    "react-native-svg": "^15.15.1",
-    "react-native-web": "^0.21.0",
-    "react-navigation": "^5.0.0"
+    "react-native-svg": "~15.12.1"
   },
   "devDependencies": {
+    "@babel/core": "^7.28.0",
     "@types/react": "~19.1.0",
-    "typescript": "~5.9.2"
+    "typescript": "~5.9.0"
+  },
+  "pnpm": {
+    "peerDependencyRules": {
+      "ignoreMissing": [
+        "react-dom"
+      ]
+    }
   },
   "private": true
 }
