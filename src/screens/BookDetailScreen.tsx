@@ -82,13 +82,13 @@ export function BookDetailScreen({ route, navigation }: BookDetailScreenProps) {
 		try {
 			const online = await connectivityService.isOnline();
 			if (!online) {
-				Alert.alert("Error", "Necesitas conexión a Internet para compartir");
+				Alert.alert("Error", MESSAGES.ERROR_INTERNET_REQUIRED);
 				return;
 			}
 
 			const success = await shareService.shareBook(book);
 			if (!success) {
-				Alert.alert("", "No hay aplicaciones disponibles para compartir");
+				Alert.alert("", MESSAGES.ERROR_NO_SHARE_APPS);
 			}
 		} catch (error) {
 			Alert.alert("Error", MESSAGES.ERROR_GENERIC);
@@ -184,7 +184,7 @@ export function BookDetailScreen({ route, navigation }: BookDetailScreenProps) {
 					{/* Rating */}
 					{bookIsFavorite && (
 						<View style={styles.ratingSection}>
-							<Text style={styles.label}>Mi Puntaje:{bookIsFavorite}</Text>
+					<Text style={styles.label}>{MESSAGES.MY_RATING}</Text>
 							<StarRating rating={rating} onRatingChange={handleRatingChange} interactive={true} size="large" showRatingNumber={true} />
 						</View>
 					)}
@@ -192,12 +192,12 @@ export function BookDetailScreen({ route, navigation }: BookDetailScreenProps) {
 					{/* Botones de acción */}
 					<View style={styles.actionsContainer}>
 						<TouchableOpacity style={[styles.button, bookIsFavorite ? styles.buttonRemove : styles.buttonAdd]} onPress={handleToggleFavorite}>
-							<Text style={styles.buttonText}>{bookIsFavorite ? "Quitar favorito" : "Agregar favorito"}</Text>
+					<Text style={styles.buttonText}>{bookIsFavorite ? MESSAGES.REMOVE_FROM_FAVORITES : MESSAGES.ADD_TO_FAVORITES}</Text>
 							{bookIsFavorite ? <IconlyRemoveBold size={22} color={COLORS.surface} /> : <IconlyPlusBold size={22} color={COLORS.surface} />}
 						</TouchableOpacity>
 
 						<TouchableOpacity style={[styles.button, styles.buttonShare]} onPress={handleShare} disabled={isShareLoading}>
-							{isShareLoading ? <ActivityIndicator color={COLORS.surface} /> : <Text style={styles.buttonText}>Compartir</Text>}
+					{isShareLoading ? <ActivityIndicator color={COLORS.surface} /> : <Text style={styles.buttonText}>{MESSAGES.SHARE}</Text>}
 							<IconlyShareBold size={22} color={COLORS.surface} />
 						</TouchableOpacity>
 					</View>

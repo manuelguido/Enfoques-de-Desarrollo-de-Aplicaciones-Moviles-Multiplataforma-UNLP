@@ -2,7 +2,7 @@ import React from "react";
 import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 import { Image } from "expo-image";
 import { Book } from "../models/Book";
-import { COLORS, FONT_SIZES, SPACING, BORDER_RADIUS } from "../utils/constants";
+import { COLORS, FONT_SIZES, SPACING, BORDER_RADIUS, MESSAGES } from "../utils/constants";
 import { formatAuthors, formatPublishedYear, getImageUrl } from "../utils/helpers";
 import { IconlyFavoriteDuotone } from "./iconly/duotone/IconlyFavoriteDuotone";
 import { useFavoriteToggle } from "../hooks/useFavoriteToggle";
@@ -40,7 +40,7 @@ export function BookCard({ book, onPress, rating = 0, showRating = false }: Book
 					<Image source={{ uri: imageUrl }} style={styles.image} />
 				) : (
 					<View style={[styles.image, styles.placeholderImage]}>
-						<Text style={styles.placeholderText}>Book</Text>
+						<Text style={styles.placeholderText}>{MESSAGES.BOOK_PLACEHOLDER}</Text>
 					</View>
 				)}
 			</View>

@@ -15,7 +15,7 @@ export function useFavoriteToggle() {
 			const isCurrentlyFavorite = isFavorite(book.id);
 
 			if (isCurrentlyFavorite) {
-				Alert.alert("Eliminar de favoritos", `¿Estás seguro que deseas quitar "${book.title}" de tus favoritos?`, [
+				Alert.alert(MESSAGES.CONFIRM_REMOVE_FAVORITE, MESSAGES.CONFIRM_REMOVE_MESSAGE(book.title), [
 					{
 						text: MESSAGES.CANCEL,
 						style: "cancel",
@@ -36,9 +36,9 @@ export function useFavoriteToggle() {
 			} else {
 				try {
 					await addFavorite(book);
-					Alert.alert("", `"${book.title}" fue agregado a favoritos`);
+					Alert.alert("", MESSAGES.SUCCESS_BOOK_ADDED(book.title));
 				} catch (error) {
-					Alert.alert("Error", "No se pudo agregar a favoritos");
+					Alert.alert("Error", MESSAGES.ERROR_ADD_FAVORITE);
 				}
 			}
 		},

@@ -3,6 +3,7 @@ import { Favorite, FavoritesState, FavoritesAction } from "../models/Favorite";
 import { Book } from "../models/Book";
 import { createFavorite, updateFavoriteRating } from "../models/Favorite";
 import { storageService } from "../services/storageService";
+import { MESSAGES } from "../utils/constants";
 
 /**
  * Context para el estado global de favoritos
@@ -84,7 +85,7 @@ export function FavoritesProvider({ children }: { children: ReactNode }) {
 			const favorites = await storageService.getFavorites();
 			dispatch({ type: "LOAD_FAVORITES", payload: favorites });
 		} catch (error) {
-			const errorMessage = error instanceof Error ? error.message : "Error desconocido";
+			const errorMessage = error instanceof Error ? error.message : MESSAGES.ERROR_UNKNOWN;
 			dispatch({ type: "SET_ERROR", payload: errorMessage });
 		}
 	}, []);
@@ -95,7 +96,7 @@ export function FavoritesProvider({ children }: { children: ReactNode }) {
 			await storageService.saveFavorite(favorite);
 			dispatch({ type: "ADD_FAVORITE", payload: favorite });
 		} catch (error) {
-			const errorMessage = error instanceof Error ? error.message : "Error al agregar a favoritos";
+			const errorMessage = error instanceof Error ? error.message : MESSAGES.ERROR_ADD_FAVORITES_CONTEXT;
 			dispatch({ type: "SET_ERROR", payload: errorMessage });
 			throw error;
 		}
@@ -106,7 +107,7 @@ export function FavoritesProvider({ children }: { children: ReactNode }) {
 			await storageService.removeFavorite(bookId);
 			dispatch({ type: "REMOVE_FAVORITE", payload: bookId });
 		} catch (error) {
-			const errorMessage = error instanceof Error ? error.message : "Error al remover de favoritos";
+			const errorMessage = error instanceof Error ? error.message : MESSAGES.ERROR_REMOVE_FAVORITES_CONTEXT;
 			dispatch({ type: "SET_ERROR", payload: errorMessage });
 			throw error;
 		}
@@ -117,7 +118,7 @@ export function FavoritesProvider({ children }: { children: ReactNode }) {
 			await storageService.updateFavoriteRating(bookId, rating);
 			dispatch({ type: "UPDATE_RATING", payload: { bookId, rating } });
 		} catch (error) {
-			const errorMessage = error instanceof Error ? error.message : "Error al actualizar rating";
+			const errorMessage = error instanceof Error ? error.message : MESSAGES.ERROR_UPDATE_RATING_CONTEXT;
 			dispatch({ type: "SET_ERROR", payload: errorMessage });
 			throw error;
 		}
@@ -161,7 +162,7 @@ export function useFavorites(): FavoritesContextType {
 	const context = React.useContext(FavoritesContext);
 
 	if (!context) {
-		throw new Error("useFavorites debe usarse dentro de FavoritesProvider");
+		throw new Error(MESSAGES.ERROR_CONTEXT_OUTSIDE_PROVIDER);
 	}
 
 	return context;

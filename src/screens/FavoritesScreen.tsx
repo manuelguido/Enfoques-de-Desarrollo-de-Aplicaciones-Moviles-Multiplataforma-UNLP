@@ -38,9 +38,9 @@ export function FavoritesScreen({ navigation }: FavoritesScreenProps) {
 		<SafeAreaView style={styles.container} edges={["top"]}>
 			{/* Header */}
 			<View style={styles.header}>
-				<Text style={styles.title}>Mis Favoritos</Text>
+				<Text style={styles.title}>{MESSAGES.FAVORITES_TITLE}</Text>
 				<Text style={styles.subtitle}>
-					Tienes {favorites.length} {favorites.length === 1 ? "libro" : "libros"} en favoritos.
+					{favorites.length === 1 ? MESSAGES.FAVORITES_COUNT_SINGLE : MESSAGES.FAVORITES_COUNT_MULTIPLE(favorites.length)}
 				</Text>
 			</View>
 
@@ -54,7 +54,7 @@ export function FavoritesScreen({ navigation }: FavoritesScreenProps) {
 					<View style={styles.emptyContainer}>
 						{!isEmpty && <Text style={styles.emptyIcon}>Libros</Text>}
 						<Text style={styles.emptyMessage}>{MESSAGES.NO_FAVORITES}</Text>
-						<Text style={styles.emptySubtext}>Los libros que marques como favorito aparecerán aquí</Text>
+						<Text style={styles.emptySubtext}>{MESSAGES.FAVORITES_HELP_TEXT}</Text>
 					</View>
 				}
 			/>
@@ -62,7 +62,7 @@ export function FavoritesScreen({ navigation }: FavoritesScreenProps) {
 			{/* Info si está vacío */}
 			{isEmpty && (
 				<View style={styles.footerInfo}>
-					<Text style={styles.footerText}>Ve al inicio para buscar libros y agregar a tus favoritos.</Text>
+				<Text style={styles.footerText}>{MESSAGES.FAVORITES_FOOTER_TEXT}</Text>
 				</View>
 			)}
 		</SafeAreaView>

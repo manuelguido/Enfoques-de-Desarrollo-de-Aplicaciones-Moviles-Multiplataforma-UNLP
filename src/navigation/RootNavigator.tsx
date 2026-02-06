@@ -5,7 +5,7 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { HomeScreen } from "../screens/HomeScreen";
 import { BookDetailScreen } from "../screens/BookDetailScreen";
 import { FavoritesScreen } from "../screens/FavoritesScreen";
-import { COLORS, FONT_SIZES } from "../utils/constants";
+import { COLORS, FONT_SIZES, MESSAGES } from "../utils/constants";
 import { IconlyHomeDuotone } from "../components/iconly/duotone/IconlyHomeDuotone";
 import { IconlyFavoriteDuotone } from "../components/iconly/duotone/IconlyFavoriteDuotone";
 
@@ -25,14 +25,14 @@ function HomeStack() {
 				name="HomeScreen"
 				component={HomeScreen}
 				options={{
-					title: "Inicio",
+					title: MESSAGES.NAV_HOME,
 				}}
 			/>
 			<Stack.Screen
 				name="BookDetailScreen"
 				component={BookDetailScreen}
 				options={({ route }: any) => ({
-					title: route.params?.book?.title || "Detalle del Libro",
+					title: route.params?.book?.title || MESSAGES.BOOK_DETAIL_TITLE,
 					headerShown: true,
 					headerStyle: {
 						backgroundColor: COLORS.primary,
@@ -61,14 +61,14 @@ function FavoritesStack() {
 				name="FavoritesScreen"
 				component={FavoritesScreen}
 				options={{
-					title: "Favoritos",
+					title: MESSAGES.NAV_FAVORITES,
 				}}
 			/>
 			<Stack.Screen
 				name="BookDetailFromFavorites"
 				component={BookDetailScreen}
 				options={({ route }: any) => ({
-					title: route.params?.book?.title || "Detalle del Libro",
+					title: route.params?.book?.title || MESSAGES.BOOK_DETAIL_TITLE,
 					headerShown: true,
 					headerStyle: {
 						backgroundColor: COLORS.primary,
@@ -112,7 +112,7 @@ export function RootNavigator() {
 					name="Inicio"
 					component={HomeStack}
 					options={{
-						title: "Inicio",
+						title: MESSAGES.NAV_HOME,
 						tabBarIcon: ({ color, size }) => <IconlyHomeDuotone color={color} size={size} />,
 					}}
 				/>
@@ -120,7 +120,7 @@ export function RootNavigator() {
 					name="Favoritos"
 					component={FavoritesStack}
 					options={{
-						title: "Favoritos",
+						title: MESSAGES.NAV_FAVORITES,
 						tabBarIcon: ({ color, size }) => <IconlyFavoriteDuotone color={color} size={size} />,
 					}}
 				/>

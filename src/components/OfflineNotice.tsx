@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
-import { COLORS, SPACING, FONT_SIZES, BORDER_RADIUS } from '../utils/constants';
+import { COLORS, SPACING, FONT_SIZES, BORDER_RADIUS, MESSAGES } from '../utils/constants';
 
 interface OfflineNoticeProps {
   visible: boolean;
@@ -14,7 +14,7 @@ export function OfflineNotice({ visible }: OfflineNoticeProps) {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.text}>Sin conexion a Internet</Text>
+      <Text style={styles.text}>{MESSAGES.OFFLINE_NOTICE}</Text>
     </View>
   );
 }

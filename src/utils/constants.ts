@@ -88,40 +88,29 @@ export const SHADOWS = {
 
 // Textos
 export const MESSAGES = {
-	// Inicio
-	WELCOME: "¡Bienvenido a BooksApp!",
-	WELCOME_SUBTEXT: "Explora, busca y guarda tus libros favoritos.",
-
 	// Errores
 	ERROR_SEARCH_REQUIRED: "Por favor, ingresa un término de búsqueda",
 	ERROR_NO_RESULTS: "No se encontraron resultados",
 	ERROR_API_FAILURE: "Error al obtener información de la API",
-	ERROR_NO_CONNECTION: "No hay conexión a Internet",
-	ERROR_LOAD_FAVORITES: "Error al cargar favoritos",
 	ERROR_GENERIC: "Ocurrió un error. Intenta nuevamente",
 
 	// Éxito
 	SUCCESS_ADDED_FAVORITE: "Agregado a favoritos",
 	SUCCESS_REMOVED_FAVORITE: "Removido de favoritos",
-	SUCCESS_RATING_UPDATED: "Puntaje actualizado",
-	SUCCESS_SHARED: "Compartido exitosamente",
 
 	// Avisos
 	OFFLINE_MODE: "Modo sin conexión - Solo puedes ver favoritos",
 	SEARCH_REQUIRES_CONNECTION: "Necesitas conexión a Internet para buscar",
-	LOADING: "Cargando...",
 	NO_FAVORITES: "No tienes libros favoritos aún",
 
 	// Pantalla de búsqueda
 	SEARCH_PLACEHOLDER: "Buscar libros...",
 	SEARCH_TITLE: "Busca un libro para comenzar",
+	SEARCH_SUBTITLE: "Ingresa un término de búsqueda",
 	SEARCH_BUTTON: "Buscar",
 	RESULTS_FOUND: (count: number) => `${count} resultado${count !== 1 ? "s" : ""} encontrado${count !== 1 ? "s" : ""}`,
 
 	// Pantalla de detalle
-	FAVORITE_BUTTON: "Agregar a favoritos",
-	UNFAVORITE_BUTTON: "Quitar de favoritos",
-	SHARE_BUTTON: "Compartir",
 	AUTHOR: "Autor",
 	AUTHORS: "Autores",
 	PUBLISHER: "Editorial",
@@ -130,19 +119,48 @@ export const MESSAGES = {
 	LANGUAGE: "Idioma",
 	CATEGORIES: "Categorías",
 	DESCRIPTION: "Descripción",
-	NO_DESCRIPTION: "Sin descripción disponible",
 
-	// Pantalla de favoritos
+	// Navegación
+	NAV_HOME: "Inicio",
+	NAV_FAVORITES: "Favoritos",
+	BOOK_DETAIL_TITLE: "Detalle del Libro",
+
+	// Favoritos específico
 	FAVORITES_TITLE: "Mis Favoritos",
-	EMPTY_FAVORITES: "No tienes libros marcados como favoritos",
-	DELETE_FAVORITE: "¿Deseas quitar este libro de favoritos?",
+	FAVORITES_COUNT_SINGLE: "Tienes 1 libro en favoritos.",
+	FAVORITES_COUNT_MULTIPLE: (count: number) => `Tienes ${count} libros en favoritos.`,
+	FAVORITES_HELP_TEXT: "Los libros que marques como favorito aparecerán aquí",
+	FAVORITES_FOOTER_TEXT: "Ve al inicio para buscar libros y agregar a tus favoritos.",
+	MY_RATING: "Mi Puntaje:",
+	ADD_TO_FAVORITES: "Agregar favorito",
+	REMOVE_FROM_FAVORITES: "Quitar favorito",
+	SHARE: "Compartir",
+
+	// Alertas/Confirmaciones
+	CONFIRM_REMOVE_FAVORITE: "Eliminar de favoritos",
+	CONFIRM_REMOVE_MESSAGE: (title: string) => `¿Estás seguro que deseas quitar "${title}" de tus favoritos?`,
+	SUCCESS_BOOK_ADDED: (title: string) => `"${title}" fue agregado a favoritos`,
+	ERROR_ADD_FAVORITE: "No se pudo agregar a favoritos",
+	ERROR_INTERNET_REQUIRED: "Necesitas conexión a Internet para compartir",
+	ERROR_NO_SHARE_APPS: "No hay aplicaciones disponibles para compartir",
 	CANCEL: "Cancelar",
 	DELETE: "Eliminar",
+
+	// Conexión
+	OFFLINE_NOTICE: "Sin conexion a Internet",
+
+	// Errores generales del contexto
+	ERROR_UNKNOWN: "Error desconocido",
+	ERROR_ADD_FAVORITES_CONTEXT: "Error al agregar a favoritos",
+	ERROR_REMOVE_FAVORITES_CONTEXT: "Error al remover de favoritos",
+	ERROR_UPDATE_RATING_CONTEXT: "Error al actualizar rating",
+	ERROR_CONTEXT_OUTSIDE_PROVIDER: "useFavorites debe usarse dentro de FavoritesProvider",
+
+	// Placeholders
+	BOOK_PLACEHOLDER: "Book",
 };
 
 // Configuración de ratings
 export const RATING_CONFIG = {
-	MIN: 0,
 	MAX: 5,
-	STEP: 1,
 };

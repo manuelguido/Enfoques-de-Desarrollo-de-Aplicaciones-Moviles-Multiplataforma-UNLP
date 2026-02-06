@@ -134,11 +134,20 @@ export function HomeScreen({ navigation }: HomeScreenProps) {
 
 			{/* Resultados */}
 			<View style={styles.listContainer}>
-				{books.length > 0 && <Text style={styles.resultsInfo}>{MESSAGES.RESULTS_FOUND(books.length)}</Text>}
+				{isOnline && books.length > 0 && <Text style={styles.resultsInfo}>{MESSAGES.RESULTS_FOUND(books.length)}</Text>}
 
-				{loading ? (
+				{!isOnline ? (
+					<View style={styles.emptyContainer}>
+						<Text style={styles.emptyMessage}>{MESSAGES.OFFLINE_MODE}</Text>
+					</View>
+				) : loading ? (
 					<View style={styles.loadingContainer}>
 						<ActivityIndicator size="large" color={COLORS.primary} />
+					</View>
+				) : books.length === 0 ? (
+					<View style={styles.emptyContainer}>
+						<Text style={styles.emptyMessage}>{MESSAGES.SEARCH_TITLE}</Text>
+						<Text style={styles.emptySubtext}>{MESSAGES.SEARCH_SUBTITLE}</Text>
 					</View>
 				) : (
 					<FlatList
@@ -149,14 +158,6 @@ export function HomeScreen({ navigation }: HomeScreenProps) {
 							return <BookCard book={item} onPress={() => handleBookPress(item)} rating={rating} showRating={rating > 0} />;
 						}}
 						contentContainerStyle={styles.listContent}
-						ListEmptyComponent={
-							books.length === 0 ? (
-								<View style={styles.emptyContainer}>
-									{isOnline && <Text style={styles.emptyMessage}>{MESSAGES.SEARCH_TITLE}</Text>}
-									<Text style={styles.emptySubtext}>{isOnline ? "Ingresa un término de búsqueda" : MESSAGES.OFFLINE_MODE}</Text>
-								</View>
-							) : null
-						}
 					/>
 				)}
 			</View>
