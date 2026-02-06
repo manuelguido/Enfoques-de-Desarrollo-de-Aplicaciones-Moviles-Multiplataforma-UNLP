@@ -28,7 +28,7 @@ El APK se genera en: `android/app/build/outputs/apk/release/app-release.apk`
 
 ### Opción 1: Instalar APK directamente
 
-1. Descargar [BooksApp.apk](https://github.com/manuelguido/Enfoques-de-Desarrollo-de-Aplicaciones-Moviles-Multiplataforma-UNLP/raw/2286d704c608cef751bcdd404aae891d25ce5035/BooksApp.apk).
+1. Descargar [BooksApp.apk](https://github.com/manuelguido/Enfoques-de-Desarrollo-de-Aplicaciones-Moviles-Multiplataforma-UNLP/raw/refs/heads/main/BooksApp.apk).
 
 2. Instalar en el dispositivo.
 
