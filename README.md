@@ -10,6 +10,12 @@ cd Enfoques-de-Desarrollo-de-Aplicaciones-Moviles-Multiplataforma-UNLP
 # Instalar dependencias
 pnpm install
 
+# Crear un nuevo archivo .env
+cp .env.example .env
+
+# Pegar en el archivo .env la API key de Google Books API
+GOOGLE_BOOKS_API_KEY=
+
 # Generar el proyecto nativo
 pnpm run prebuild:clean
 ```
